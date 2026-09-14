@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Kryostack Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/admin/assets/admin.css">
+</head>
+<body>
+<div class="dash">
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="/assets/logo-icon.png" alt="Kryostack" class="logo-mark">
+      Kryostack
+    </div>
+    <nav class="side-nav">
+      <button data-panel="services" class="active">Services</button>
+      <button data-panel="projects">Featured Work</button>
+      <button data-panel="testimonials">Testimonials</button>
+      <button data-panel="contacts">Messages</button>
+      <button data-panel="settings">Settings</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="who" id="who-label">—</div>
+      <button class="logout-btn" id="logout-btn">Log out</button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+
+    <!-- SERVICES -->
+    <section class="panel active" id="panel-services">
+      <div class="dash-header"><h2>Services</h2><button class="btn-primary btn-sm" data-add="services">Add service</button></div>
+      <p class="dash-sub">These four rows power the "What we build" section on the public site.</p>
+      <div class="banner" id="banner-services"></div>
+      <form class="item-form" id="form-services" style="display:none;">
+        <h3 id="form-title-services">Add service</h3>
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <div class="field full"><label>Title</label><input type="text" name="title" required></div>
+          <div class="field full"><label>Description</label><textarea name="description" required></textarea></div>
+          <div class="field">
+            <label>Icon</label>
+            <select name="icon_key">
+              <option value="web">Web</option>
+              <option value="mobile">Mobile</option>
+              <option value="ai">AI</option>
+              <option value="security">Security</option>
+              <option value="generic">Generic</option>
+            </select>
+          </div>
+          <div class="field"><label>Order</label><input type="number" name="sort_order" value="0"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary btn-sm">Save</button>
+          <button type="button" class="btn-secondary btn-sm" data-cancel="services">Cancel</button>
+        </div>
+      </form>
+      <div class="item-list" id="list-services"></div>
+    </section>
+
+    <!-- PROJECTS / WORK -->
+    <section class="panel" id="panel-projects">
+      <div class="dash-header"><h2>Featured Work</h2><button class="btn-primary btn-sm" data-add="projects">Add project</button></div>
+      <p class="dash-sub">Shown as gradient tiles in the "Featured work" section.</p>
+      <div class="banner" id="banner-projects"></div>
+      <form class="item-form" id="form-projects" style="display:none;">
+        <h3 id="form-title-projects">Add project</h3>
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <div class="field"><label>Name</label><input type="text" name="name" required></div>
+          <div class="field"><label>Tag</label><input type="text" name="tag" placeholder="e.g. Web · Security"></div>
+          <div class="field full"><label>Description</label><textarea name="description" required></textarea></div>
+          <div class="field full">
+            <label>Thumbnail gradient colors</label>
+            <div class="color-row">
+              <div class="field"><input type="color" name="color1" value="#142033"></div>
+              <div class="field"><input type="color" name="color2" value="#1E3A5F"></div>
+              <div class="field"><input type="color" name="color3" value="#3B6EC9"></div>
+            </div>
+          </div>
+          <div class="field"><label>Order</label><input type="number" name="sort_order" value="0"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary btn-sm">Save</button>
+          <button type="button" class="btn-secondary btn-sm" data-cancel="projects">Cancel</button>
+        </div>
+      </form>
+      <div class="item-list" id="list-projects"></div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="panel" id="panel-testimonials">
+      <div class="dash-header"><h2>Testimonials</h2><button class="btn-primary btn-sm" data-add="testimonials">Add testimonial</button></div>
+      <p class="dash-sub">Shown in the "What clients say" section.</p>
+      <div class="banner" id="banner-testimonials"></div>
+      <form class="item-form" id="form-testimonials" style="display:none;">
+        <h3 id="form-title-testimonials">Add testimonial</h3>
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <div class="field full"><label>Quote</label><textarea name="quote" required></textarea></div>
+          <div class="field"><label>Name</label><input type="text" name="name" required></div>
+          <div class="field"><label>Role &amp; company</label><input type="text" name="role"></div>
+          <div class="field"><label>Initials</label><input type="text" name="initials" maxlength="4"></div>
+          <div class="field"><label>Order</label><input type="number" name="sort_order" value="0"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary btn-sm">Save</button>
+          <button type="button" class="btn-secondary btn-sm" data-cancel="testimonials">Cancel</button>
+        </div>
+      </form>
+      <div class="item-list" id="list-testimonials"></div>
+    </section>
+
+    <!-- CONTACT SUBMISSIONS -->
+    <section class="panel" id="panel-contacts">
+      <div class="dash-header"><h2>Messages</h2></div>
+      <p class="dash-sub">Submissions from the contact form on the public site.</p>
+      <div class="banner" id="banner-contacts"></div>
+      <div class="item-list" id="list-contacts"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="panel" id="panel-settings">
+      <div class="dash-header"><h2>Settings</h2></div>
+      <p class="dash-sub">Update your admin password.</p>
+      <div class="banner" id="banner-settings"></div>
+      <form class="item-form" id="form-password" style="max-width:420px;">
+        <h3>Change password</h3>
+        <div class="field" style="margin-bottom:14px;"><label>Current password</label><input type="password" name="current_password" required></div>
+        <div class="field"><label>New password</label><input type="password" name="new_password" required minlength="8"></div>
+        <div class="form-actions"><button type="submit" class="btn-primary btn-sm">Update password</button></div>
+      </form>
+    </section>
+
+  </main>
+</div>
+
+<script src="/admin/assets/admin.js"></script>
+</body>
+</html>

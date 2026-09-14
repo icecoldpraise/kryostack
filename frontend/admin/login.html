@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Kryostack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/admin/assets/admin.css">
+</head>
+<body class="login-page">
+  <div class="login-card">
+    <div class="logo">
+      <img src="/assets/logo-icon.png" alt="Kryostack" class="logo-mark">
+      Kryostack
+    </div>
+    <h1>Admin Dashboard</h1>
+    <p class="sub">Sign in to manage site content</p>
+
+    <form id="login-form">
+      <div class="field" style="margin-bottom:16px;">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autocomplete="username">
+      </div>
+      <div class="field" style="margin-bottom:8px;">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <p class="form-msg" id="login-msg"></p>
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+
+    <p class="login-hint">Default account: <strong>admin</strong> / <strong>changeme123!</strong><br>Change this immediately from Settings after logging in.</p>
+  </div>
+
+<script>
+  const form = document.getElementById('login-form');
+  const msg = document.getElementById('login-msg');
+
+  // If already logged in, skip straight to the dashboard.
+  if (localStorage.getItem('kryostack_admin_token')) {
+    window.location.href = '/admin/dashboard.html';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.className = 'form-msg';
+    msg.textContent = '';
+
+    const username = form.username.value.trim();
+    const password = form.password.value;
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.detail || 'Invalid username or password');
+      }
+      const data = await res.json();
+      localStorage.setItem('kryostack_admin_token', data.access_token);
+      window.location.href = '/admin/dashboard.html';
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.className = 'form-msg error';
+    }
+  });
+</script>
+</body>
+</html>
